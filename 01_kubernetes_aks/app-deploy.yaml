@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: webapp
-  replicas: 5
+  replicas: 3
   template:
     metadata:
       labels:
@@ -14,9 +14,7 @@ spec:
     spec:
       containers:
       - name: webapp
-        # image: aksclusteracr.azurecr.io/webapp:1.0.2
-        image: houssemdocker/webapp:111
-        # image: ACR_NAME/DOCKER_IMAGE:TAG
+        image: mylabacr13.azurecr.io/webapp:_tag_
         # image: __ACR_NAME__.azurecr.io/__DOCKER_IMAGE__:__TAG__
         ports:
         - containerPort: 80
