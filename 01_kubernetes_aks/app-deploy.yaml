@@ -20,8 +20,8 @@ spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
-      - name: 2048-game
-        image: mylabacr13.azurecr.io/2048-game:v1
+      - name: web-game
+        image: mylabacr13.azurecr.io/web-game:_tag_
         ports:
         - containerPort: 80
         resources:
