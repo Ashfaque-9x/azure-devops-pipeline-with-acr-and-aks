@@ -1,49 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-deployment
+  name: 2048-game
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: webapp
-  replicas: 3
+      app: 2048-game
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
   template:
     metadata:
       labels:
-        app: webapp
+        app: 2048-game
     spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
       containers:
-      - name: webapp
-        image: mylabacr13.azurecr.io/webapp:_tag_
-        # image: __ACR_NAME__.azurecr.io/__DOCKER_IMAGE__:__TAG__
+      - name: 2048-game
+        image: mylabacr13.azurecr.io/2048-game:v1
         ports:
         - containerPort: 80
         resources:
-          limits:
-            cpu: 300m
-            memory: "100Mi"
           requests:
-            cpu: 100m
-            memory: "50Mi"
-        env:
-          - name: ConnectionStrings__WebAppContext
-            valueFrom:
-              configMapKeyRef:
-                name: mssql-connection-configmap
-                key: db-connection-string
-        #     secretKeyRef:
-        #       name: mssql-secret
-        #       key: db-connection-string-secret
+            cpu: 250m
+          limits:
+            cpu: 500m
+        
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: webapp-service
+  name: 2048-game
 spec:
-  selector:
-    app: webapp
+  type: LoadBalancer
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
-  type: LoadBalancer #NodePort
+  - port: 80
+  selector:
+    app: 2048-game
