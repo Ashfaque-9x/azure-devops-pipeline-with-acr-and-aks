@@ -33,5 +33,3 @@ steps:
     azureSubscriptionEndpointForSecrets: 'Towards-AzurePortal'
     azureContainerRegistry: 'mylabacr13.azurecr.io'
     forceUpdate: false
-
-#javeedbadboy
